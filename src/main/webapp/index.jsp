@@ -14,8 +14,19 @@
   <li id = "three">third</li>
 </ul>
 
-<div id = "board">
-  hi
+<div class = "board">
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
+  <div class="box"></div>
 </div>
 
 <br>
