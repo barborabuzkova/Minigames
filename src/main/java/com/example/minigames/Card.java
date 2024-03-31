@@ -1,22 +1,23 @@
 package com.example.minigames;
 
+import java.util.Arrays;
+
 public class Card {
 
     /**
      * number of cards in a set and number of possibilities for each characteristic
      * In regular set, this is 3 because there are 3 numbers, colors, fillings, and shapes
      */
-    private final int setSize = 3;
+    public static final int SET_SIZE = 3;
     /**
      * number of characteristics on each card
      * In regular set, this is 4 - number, color, filling, and shape
      */
-    private final int numberOfCharacteristics = 4;
+    public static final int NUMBER_OF_CHARACTERISTICS = 4;
     /**
      * the actual values, stored as numbers 0 to setSize - 1, of length numberOfCharacteristics
      */
     private final int[] characteristics;
-    private final String id;
 
 
     /**
@@ -26,11 +27,6 @@ public class Card {
      */
     public Card(int[] characteristics) {
         this.characteristics = characteristics;
-        StringBuilder temp = new StringBuilder();
-        for (int i = 0; i < numberOfCharacteristics; i++) {
-            temp.append(characteristics[i]);
-        }
-        this.id = temp.toString();
     }
 
     /**
@@ -40,5 +36,10 @@ public class Card {
      */
     public int[] getCharacteristics() {
         return characteristics;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(characteristics);
     }
 }

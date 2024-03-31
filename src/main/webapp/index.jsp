@@ -4,9 +4,11 @@
 <head>
   <title>Minigames</title>
   <link href="style.css" rel="stylesheet">
+  <script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+  <script src="master.js" type="text/javascript"></script>
 </head>
 <body>
-<h1><%= "Hello World!" %></h1>
+<h1><%= "Hello asdfadfWorld!" %></h1>
 <br/>
 <ul>
   <li id = "one">first</li>
@@ -36,7 +38,7 @@
 </html>
 
 <script>
-  const element = document.querySelectorAll("li");
+  <%-- const element = document.querySelectorAll("li");
   element.forEach(thing => {
     thing.addEventListener("click", ()=> {
       console.log("event logged " + thing.id)
@@ -48,5 +50,6 @@
   header.addEventListener("dblclick", () => {
     console.log("header clicked on")
     body.append("hi ")
-  })
+  }) --%>
+
 </script>
