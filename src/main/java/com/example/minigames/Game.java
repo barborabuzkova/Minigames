@@ -9,7 +9,16 @@ public class Game {
      * creates a new game with a position
      */
     public Game() {
+        System.out.println("game initialization started");
         this.position = new Position();
+        System.out.println("game initialization finished");
+    }
+
+    /**
+     * @return current position
+     */
+    public Position getPosition() {
+        return position;
     }
 
     /**

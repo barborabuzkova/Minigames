@@ -16,7 +16,7 @@ public class Algorithm {
     }
 
     public static boolean checkIfSet (Set<Card> cards) {
-        //TODO figure out how to do it!!!!!
+        //TODO figure out how to do this!!!!!
         if (true) {
             return true;
         } else {

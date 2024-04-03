@@ -12,14 +12,14 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     public void init() {
-        System.out.println("Init called");
+        System.out.println("init called");
         //initialization of position
         this.game = new Game();
+        System.out.println("init finished");
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         System.out.println("Get was called :)");
 //        response.setContentType("text/html");
 //        PrintWriter out = response.getWriter();
@@ -32,8 +32,8 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         System.out.println("Post was called :)");
+        System.out.println(game.getPosition().getCurrentlyOnBoard().toString());
 //        response.setContentType("text/html");
 //        PrintWriter out = response.getWriter();
 //        out.println("<html><body>");

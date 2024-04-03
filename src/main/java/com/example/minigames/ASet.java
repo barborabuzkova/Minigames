@@ -14,9 +14,13 @@ public class ASet {
      * @param setOfCards JavaSet of cards that are a valid set
      */
     public ASet(Set<Card> setOfCards) {
+        if (setOfCards.size() != Card.SET_SIZE) {
+            throw new IllegalArgumentException("Set not correct size: is " + setOfCards.size()
+                    + "should be " + Card.SET_SIZE);
+        } else if (!Algorithm.checkIfSet(setOfCards)) {
+            throw new IllegalArgumentException("Cards are not a valid set");
+        }
         this.setOfCards = setOfCards;
-        //throw error if set isn't valid
-        //assert this.setOfCards.size() == Card.SET_SIZE;
     }
 
 //    /**

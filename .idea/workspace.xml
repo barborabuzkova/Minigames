@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3edde16b-a61e-439d-bc50-6bfe86f73d71" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/ASet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/HelloServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HelloServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/ASet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/ASet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +57,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
@@ -118,7 +119,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1711245099047</updated>
-      <workItem from="1711245100170" duration="40317000" />
+      <workItem from="1711245100170" duration="46858000" />
     </task>
     <servers />
   </component>
