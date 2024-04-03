@@ -1,39 +1,20 @@
 import java.io.*;
 
 import com.example.minigames.Card;
+import com.example.minigames.Game;
+import com.example.minigames.Position;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 // @WebServlet(name = "HelloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
-    private Card[] totalDeck;
-    private Card[] currentlyOnBoard;
-    private Card[] collectedSets;
+    private Game game;
 
     @Override
     public void init() {
         System.out.println("Init called");
-        //initialization of deck
-        totalDeck = new Card[(int) Math.pow(Card.SET_SIZE, Card.NUMBER_OF_CHARACTERISTICS)];
-        int count = 0;
-        for (int i = 0; i < Card.SET_SIZE; i++) {
-            for (int j = 0; j < Card.SET_SIZE; j++) {
-                for (int k = 0; k < Card.SET_SIZE; k++) {
-                    for (int l = 0; l < Card.SET_SIZE; l++) {
-                        totalDeck[count] = new Card(new int[]{i,j,k,l});
-                        count++;
-                    }
-                }
-            }
-        }
-        //TODO FIX
-        currentlyOnBoard = new Card[Card.SET_SIZE * (Card.NUMBER_OF_CHARACTERISTICS + 1)];
-        collectedSets = new Card[(int) Math.pow(Card.SET_SIZE, Card.NUMBER_OF_CHARACTERISTICS)];
-
-        //shuffle
-        // Collections.shuffle
-
-
+        //initialization of position
+        this.game = new Game();
     }
 
     @Override
