@@ -33,8 +33,8 @@ public class HelloServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("Post was called :)");
-        System.out.println(game.getPosition().getCurrentlyOnBoard().toString());
-        System.out.println(Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()));
+        System.out.println("Cards on board" + game.getPosition().getCurrentlyOnBoard().toString());
+        System.out.println("number of sets: " + Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).size());
 //        response.setContentType("text/html");
 //        PrintWriter out = response.getWriter();
 //        out.println("<html><body>");

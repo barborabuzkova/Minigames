@@ -11,14 +11,14 @@ public class Algorithm {
         }
         Set<ASet> combos = new HashSet<>();
         createCombinations(currentlyOnBoard, combos, new HashSet<>(), 0, new int[Card.SET_SIZE]);
-        System.out.println("all sets found: " + combos);
+        //System.out.println("all sets found: " + combos); //for testing
         return combos;
     }
 
-//    public static void main(String[] args) {
-//        Position p = new Position();
-//        findAllSets(p.getCurrentlyOnBoard());
-//    }
+    public static void main(String[] args) {
+        Position p = new Position();
+        findAllSets(p.getCurrentlyOnBoard());
+    }
 
     private static void createCombinations(ArrayList<Card> currentlyOnBoard, Set<ASet> combos,
                                            Set<Card> curr, int locInArray, int[] allLocs) {
@@ -27,11 +27,11 @@ public class Algorithm {
         }
         for (int i = allLocs[locInArray]; i < currentlyOnBoard.size(); i++) {
             curr.add(currentlyOnBoard.get(i));
-            System.out.println("i've been added");
+            //System.out.println("i've been added"); //for testing
             if (curr.size() == Card.SET_SIZE) {
                 if (checkIfSet(curr)) {
                     combos.add(new ASet(curr));
-                    System.out.println("wee i'm a set" + curr.toString());
+                    //System.out.println("wee i'm a set" + curr.toString()); //for testing
                 }
             } else {
                 allLocs[locInArray + 1] = i + 1;
@@ -39,7 +39,7 @@ public class Algorithm {
                 allLocs[locInArray + 1] = i;
             }
             curr.remove(currentlyOnBoard.get(i));
-            System.out.println("i've been removed");
+            //System.out.println("i've been removed"); //for testing
         }
     }
 
@@ -48,8 +48,8 @@ public class Algorithm {
             throw new IllegalArgumentException("Set size incorrect, should be " + Card.SET_SIZE +
                     " is " + cards.size());
         }
-        Set<Integer> comparing = new HashSet<>();
         for (int i = 0; i < Card.NUMBER_OF_CHARACTERISTICS; i++) {
+            Set<Integer> comparing = new HashSet<>();
             for (Card c: cards) {
                 comparing.add(c.getCharacteristics()[i]);
             }

@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/HelloServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HelloServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +69,20 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Docker.Docker Image Minigames">
+    <configuration name="Algorithm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.minigames.Algorithm" />
+      <module name="Minigames.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.minigames.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Docker Image Minigames" type="docker-deploy" factoryName="docker-image" temporary="true" server-name="Docker">
       <deployment type="docker-image">
         <settings>
@@ -106,9 +118,14 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Algorithm" />
+      <item itemvalue="Docker.Docker Image Minigames" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Docker.Docker Image Minigames" />
+        <item itemvalue="Application.Algorithm" />
         <item itemvalue="Docker.Docker Image Minigames" />
         <item itemvalue="Docker.Docker Image Minigames" />
       </list>
