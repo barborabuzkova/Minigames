@@ -7,10 +7,7 @@
     <list default="true" id="3edde16b-a61e-439d-bc50-6bfe86f73d71" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/HelloServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HelloServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/ASet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/ASet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,9 +32,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2e7AAGNGXtUj91BxlNyic6BgKNh" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -57,9 +54,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
@@ -82,7 +79,7 @@
           <option name="portBindings">
             <list>
               <DockerPortBindingImpl>
-                <option name="containerPort" value="1234" />
+                <option name="containerPort" value="8080" />
                 <option name="hostPort" value="1235" />
               </DockerPortBindingImpl>
             </list>
@@ -97,10 +94,16 @@
           </option>
         </settings>
       </deployment>
-      <method v="2" />
+      <method v="2">
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Gradle : com.example : Minigames-1.0-SNAPSHOT.war" />
+        </option>
+      </method>
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-image" temporary="true">
-      <deployment type="docker-image" />
+      <deployment type="docker-image">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -119,11 +122,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1711245099047</updated>
-      <workItem from="1711245100170" duration="46858000" />
+      <workItem from="1711245100170" duration="55425000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>

@@ -6,16 +6,16 @@ public class Position {
     /**
      * starts as total deck, cards are drawn from this and displayed on the board
      */
-    private List<Card> currentDeck;
+    private ArrayList<Card> currentDeck;
     /**
      * cards that are displayed on the board (start top left, moves to the right)
      * should always be a multiple of Cards.SET_SIZE
      */
-    private List<Card> currentlyOnBoard;
+    private ArrayList<Card> currentlyOnBoard;
     /**
      * ASets that have been collected, contain the cards that are collected off of the board
      */
-    private final List<ASet> collectedSets;
+    private final ArrayList<ASet> collectedSets;
     private int increment = 0;
 
     /**
@@ -57,21 +57,10 @@ public class Position {
         }
     }
 
-    //doesn't work
-//    private void shuffleCards() {
-//        for (int i = currentDeck.size() - 1; i >= 0; i--) {
-//            Card temp = currentDeck.remove(i);
-//            int loc = (int) (Math.random() * i);
-//            currentDeck.add(i, currentDeck.remove(loc));
-//            currentDeck.add(loc, temp);
-//        }
-//    }
-
-
     /**
      * @return Arraylist of cards that are currently on the board
      */
-    public List<Card> getCurrentlyOnBoard() {
+    public ArrayList<Card> getCurrentlyOnBoard() {
         return currentlyOnBoard;
     }
 
