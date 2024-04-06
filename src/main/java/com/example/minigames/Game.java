@@ -2,7 +2,7 @@ package com.example.minigames;
 
 import java.util.Set;
 
-public class Game {
+public class Game { //currently just a wrapper for Position
     private Position position;
 
     /**
@@ -21,11 +21,26 @@ public class Game {
         return position;
     }
 
+
     /**
      *
-     * @param collected
+     * @param collected JavaSet of cards that are a potential set
      */
     public boolean setCollected (Set<Card> collected) {
         return position.setCollected(collected);
+    }
+
+    /**
+     * Calls Position to add cards if there isn't a set
+     */
+    public void addCardsNoSetFound () {
+        position.addCardsNoSetFound();
+    }
+
+    /**
+     * Calls Position to add cards if the board isn't full
+     */
+    public void addCardsBoardNotFull () {
+        position.addCardsBoardNotFull();
     }
 }

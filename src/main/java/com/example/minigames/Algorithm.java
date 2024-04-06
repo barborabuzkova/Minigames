@@ -5,6 +5,44 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Algorithm {
+
+    /**
+     * You should never make instances of Algorithm
+     * @throws IllegalStateException when called
+     */
+    public Algorithm() {
+        throw new IllegalStateException("You should never make instances of Algorithm");
+    }
+
+    /**
+     *
+     * @param cards JavaSet of cards of the correct size
+     * @return false if cards is not a set, true if it is
+     * @throws IllegalArgumentException if cards is not the correct size
+     */
+    public static boolean checkIfSet (Set<Card> cards) {
+        if (cards.size() != Card.SET_SIZE) {
+            throw new IllegalArgumentException("Set size incorrect, should be " + Card.SET_SIZE +
+                    " is " + cards.size());
+        }
+        for (int i = 0; i < Card.NUMBER_OF_CHARACTERISTICS; i++) {
+            Set<Integer> comparing = new HashSet<>();
+            for (Card c: cards) {
+                comparing.add(c.getCharacteristics()[i]);
+            }
+            if (!(comparing.size() == 1 || comparing.size() == Card.SET_SIZE)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     *
+     * @param currentlyOnBoard the cards that are currently on the board
+     * @return Set of ASets that are on the board
+     * @throws IllegalArgumentException if the board is empty
+     */
     public static Set<ASet> findAllSets (ArrayList<Card> currentlyOnBoard) {
         if (currentlyOnBoard.isEmpty()) {
             throw new IllegalArgumentException("Board empty");
@@ -15,11 +53,15 @@ public class Algorithm {
         return combos;
     }
 
-    public static void main(String[] args) {
-        Position p = new Position();
-        findAllSets(p.getCurrentlyOnBoard());
-    }
 
+    /**
+     * Recursively goes through currentlyOnBoard to find all combinations of cards and adds Sets to combos
+     * @param currentlyOnBoard cards on the board
+     * @param combos where the sets are added
+     * @param curr current set of cards being explored
+     * @param locInArray which card is being examined, corresponds to allLocs
+     * @param allLocs of length Card.SET_SIZE, contains the locations in currentlyOnBoard that are being explored
+     */
     private static void createCombinations(ArrayList<Card> currentlyOnBoard, Set<ASet> combos,
                                            Set<Card> curr, int locInArray, int[] allLocs) {
         if (locInArray < 0 || locInArray >= currentlyOnBoard.size()) {
@@ -41,22 +83,5 @@ public class Algorithm {
             curr.remove(currentlyOnBoard.get(i));
             //System.out.println("i've been removed"); //for testing
         }
-    }
-
-    public static boolean checkIfSet (Set<Card> cards) {
-        if (cards.size() != Card.SET_SIZE) {
-            throw new IllegalArgumentException("Set size incorrect, should be " + Card.SET_SIZE +
-                    " is " + cards.size());
-        }
-        for (int i = 0; i < Card.NUMBER_OF_CHARACTERISTICS; i++) {
-            Set<Integer> comparing = new HashSet<>();
-            for (Card c: cards) {
-                comparing.add(c.getCharacteristics()[i]);
-            }
-            if (!(comparing.size() == 1 || comparing.size() == Card.SET_SIZE)) {
-                return false;
-            }
-        }
-        return true;
     }
 }

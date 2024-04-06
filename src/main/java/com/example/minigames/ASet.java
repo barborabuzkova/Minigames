@@ -1,13 +1,12 @@
 package com.example.minigames;
 
-import java.util.HashSet;
 import java.util.Set;
 
-public class ASet {
+public class ASet { // to refactor to SetSet? Think about name
     /**
      * JavaSet of cards that are a valid Set
      */
-    private Set<Card> setOfCards;
+    private final Set<Card> setOfCards;
 
     /**
      * initializes the set of cards
@@ -20,19 +19,8 @@ public class ASet {
         } else if (!Algorithm.checkIfSet(setOfCards)) {
             throw new IllegalArgumentException("Cards are not a valid set");
         }
-        this.setOfCards = setOfCards;
+        this.setOfCards = Set.copyOf(setOfCards);
     }
-
-//    /**
-//     * initalizes the set of cards, used by algorithm
-//     * @param cards array of cards that are a valid set
-//     */
-//    public ASet(Card[] cards) {
-//        this.setOfCards = new HashSet<>();
-//        for (Card i: cards) {
-//            setOfCards.add(i);
-//        }
-//    }
 
     /**
      * @return JavaSet of cards (valid set)

@@ -16,7 +16,6 @@ public class Position {
      * ASets that have been collected, contain the cards that are collected off of the board
      */
     private final ArrayList<ASet> collectedSets;
-    private int increment = 0;
 
     /**
      * initializes position - creates all possible cards and puts them into currentDeck, shuffles,
@@ -32,7 +31,7 @@ public class Position {
         Collections.shuffle(currentDeck); //shuffle deck
         System.out.println("Cards shuffled: " + currentDeck.toString());
         currentlyOnBoard = new ArrayList<>(Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS);
-        for (int i = 0; i < Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS; i++) { //populate initial deck
+        for (int i = 0; i < Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS; i++) { //populates currentlyOnBoard
             currentlyOnBoard.add(currentDeck.remove(0));
         }
         collectedSets = new ArrayList<>();
@@ -50,7 +49,7 @@ public class Position {
             characteristics[loc] = i;
             if (loc == Card.NUMBER_OF_CHARACTERISTICS - 1) {
                 currentDeck.add(new Card(characteristics));
-                System.out.println(Arrays.toString(characteristics)); //used to test
+                // System.out.println(Arrays.toString(characteristics)); //used to test
             } else {
                 createPermutations(characteristics, loc + 1);
             }
@@ -60,21 +59,54 @@ public class Position {
     /**
      * @return Arraylist of cards that are currently on the board
      */
-    public ArrayList<Card> getCurrentlyOnBoard() {
+    public ArrayList<Card> getCurrentlyOnBoard() { // TODO Can the user get this, change it, and break everything?
         return currentlyOnBoard;
     }
 
+    public ArrayList<ASet> getCollectedSets() {
+        return collectedSets;
+    }
+
     /**
-     * Removes collected cards from board and put the set into collectedSets
+     * After calling Algorithm.checkIfSet, removes collected cards from board and puts the set into
+     * the collectedSets, if room on board, adds new cards
      * @param collected the set of cards that have been collected
      */
     public boolean setCollected (Set<Card> collected) {
         if (Algorithm.checkIfSet(collected)) {
             collectedSets.add(new ASet(collected));
             currentlyOnBoard.removeAll(collected);
+            if (currentlyOnBoard.size() < Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS) {
+                for (int i = 0; i < Card.SET_SIZE; i++) {
+                    currentlyOnBoard.add(currentDeck.remove(0));
+                }
+            }
             return true;
         } else {
             return false;
         }
     }
+
+    /**
+     * Adds cards when there is no set
+     */
+    public void addCardsNoSetFound () { // TODO read enum
+        for (int i = 0; i < Card.SET_SIZE; i++) {
+            currentlyOnBoard.add(currentDeck.remove(0));
+        }
+    }
+
+    /**
+     * adds cards to the board if it isn't full
+     */
+    public void addCardsBoardNotFull () {
+//        if (!(currentlyOnBoard.size() < Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS)) {
+//            throw new Exception("Board is full"); //TODO what type of exception is this???
+//        }
+        for (int i = 0; i < Card.SET_SIZE; i++) {
+            currentlyOnBoard.add(currentDeck.remove(0));
+        }
+    }
 }
+
+
