@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3edde16b-a61e-439d-bc50-6bfe86f73d71" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/HelloServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HelloServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/ASet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/ASet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Algorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/minigames/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/master.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/master.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +43,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -56,9 +58,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Problems",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
+    "project.structure.side.proportion": "0.3282123",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   }

@@ -12,6 +12,7 @@ repositories {
 
 ext {
   junitVersion = '5.9.2'
+  jsonVersion = 'latest.release'
 }
 
 sourceCompatibility = '11'
@@ -23,6 +24,7 @@ tasks.withType(JavaCompile) {
 
 dependencies {
   compileOnly('jakarta.platform:jakarta.jakartaee-web-api:9.1.0')
+  implementation "org.json:json:${jsonVersion}"
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
