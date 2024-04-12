@@ -8,32 +8,15 @@
   <script src="master.js" type="text/javascript"></script>
 </head>
 <body>
-<h1><%= "Hello asdfadfWorld!" %></h1>
+<h1><%= "Welcome to Set!" %></h1>
 <br/>
-<ul>
-  <li id = "one">first</li>
-  <li id = "two">second</li>
-  <li id = "three">third</li>
-</ul>
 
-<div class = "board">
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
-</div>
-
+<div id="board"></div>
+<!--
 <br>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+-->
 </body>
 </html>
 

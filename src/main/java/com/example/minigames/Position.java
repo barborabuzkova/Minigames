@@ -26,10 +26,10 @@ public class Position {
         currentDeck = new ArrayList<>((int) Math.pow(Card.SET_SIZE, Card.NUMBER_OF_CHARACTERISTICS));
         createPermutations(new int[Card.NUMBER_OF_CHARACTERISTICS], 0); // recursively create deck
         System.out.println("Cards made, deck size: " + currentDeck.size());
-        System.out.println("Cards: " + currentDeck.toString());
+        //System.out.println("Cards: " + currentDeck.toString());
         //shuffleCards();
         Collections.shuffle(currentDeck); //shuffle deck
-        System.out.println("Cards shuffled: " + currentDeck.toString());
+        System.out.println("Cards shuffled");
         currentlyOnBoard = new ArrayList<>(Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS);
         for (int i = 0; i < Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS; i++) { //populates currentlyOnBoard
             currentlyOnBoard.add(currentDeck.remove(0));
