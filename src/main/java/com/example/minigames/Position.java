@@ -72,28 +72,31 @@ public class Position {
      * the collectedSets, if room on board, adds new cards
      * @param collected the set of cards that have been collected
      */
-    public boolean setCollected (Set<Card> collected) {
+    public ArrayList<Card> setCollected (Set<Card> collected) {
+        ArrayList<Card> toBeAdded = new ArrayList<>();
         if (Algorithm.checkIfSet(collected)) {
             collectedSets.add(new ASet(collected));
             currentlyOnBoard.removeAll(collected);
             if (currentlyOnBoard.size() < Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS) {
                 for (int i = 0; i < Card.SET_SIZE; i++) {
-                    currentlyOnBoard.add(currentDeck.remove(0));
+                    toBeAdded.add(currentDeck.remove(0));
+                    currentlyOnBoard.add(toBeAdded.get(i));
                 }
             }
-            return true;
-        } else {
-            return false;
         }
+        return toBeAdded;
     }
 
     /**
      * Adds cards when there is no set
      */
-    public void addCardsNoSetFound () { // TODO read enum
+    public ArrayList<Card> addCardsNoSetFound () {
+        ArrayList<Card> toBeAdded = new ArrayList<>();
         for (int i = 0; i < Card.SET_SIZE; i++) {
-            currentlyOnBoard.add(currentDeck.remove(0));
+            toBeAdded.add(currentDeck.remove(0));
+            currentlyOnBoard.add(toBeAdded.get(i));
         }
+        return toBeAdded;
     }
 
     /**

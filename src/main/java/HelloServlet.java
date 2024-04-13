@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.example.minigames.Algorithm;
@@ -20,6 +22,9 @@ public class HelloServlet extends HttpServlet {
         this.game = new Game();
         System.out.println("Cards on board" + game.getPosition().getCurrentlyOnBoard().toString());
         System.out.println("number of sets: " + Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).size());
+        while (Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).isEmpty()) {
+            game.addCardsNoSetFound();
+        }
         System.out.println("init finished");
     }
 
@@ -39,6 +44,7 @@ public class HelloServlet extends HttpServlet {
         response.setContentType("text/json");
         PrintWriter out = response.getWriter();
         JSONObject re = new JSONObject();
+        JSONArray cards = new JSONArray();
 
         if(request.getParameter("loadPage") != null && request.getParameter("loadPage").equals("true")) {
             System.out.println("loadPage: " + request.getParameter("loadPage"));
@@ -47,14 +53,48 @@ public class HelloServlet extends HttpServlet {
             re.put("NUMBER_OF_CHARACTERISTICS", Card.NUMBER_OF_CHARACTERISTICS);
             re.put("boardSize", game.getPosition().getCurrentlyOnBoard().size());
 
-            JSONArray cards = new JSONArray();
             for (int i = 0; i < game.getPosition().getCurrentlyOnBoard().size(); i++) {
                 cards.put(i, game.getPosition().getCurrentlyOnBoard().get(i));
             }
-            re.put("cards", cards);
+            // re.put("cards", cards);
+        } else if (request.getParameter("setFound") != null && request.getParameter("setFound").equals("true")) {
+            System.out.println(request.getParameter("cardsInSet")); // testing
+            System.out.println("cards on board " + game.getPosition().getCurrentlyOnBoard());
+            Set<Card> currentCards = new HashSet<>();
+            for (String s: request.getParameter("cardsInSet").split("\",\"")) {
+                if (s.contains("[\"")) {
+                    s = s.substring(2);
+                } else if (s.contains("\"]")) {
+                    s = s.substring(0,s.length() - 2);
+                }
+                for (Card c: game.getPosition().getCurrentlyOnBoard()) {
+                    if (c.toString().equals(s)) {
+                        currentCards.add(c);
+                    }
+                }
+            }
+            System.out.println(currentCards); // testing
+            ArrayList<Card> cardsToAdd = game.getPosition().setCollected(currentCards);
+            if (!cardsToAdd.isEmpty()) {
+                re.put("collectedSet", true);
+                for (int i = 0; i < cardsToAdd.size(); i++) {
+                    cards.put(i, cardsToAdd.get(i));
+                }
+            } else {
+                re.put("collectedSet", false);
+            }
+            System.out.println("added, number of sets is " + Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()));
+            while (Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).isEmpty()) {
+                System.out.println("adding cards, no set found");
+                cardsToAdd = game.addCardsNoSetFound();
+                for (int i = 0; i < cardsToAdd.size(); i++) {
+                    cards.put(i, cardsToAdd.get(i));
+                }
+            }
         }
 
-        //System.out.println(re);
+        re.put("cards", cards);
+        System.out.println(re);
         out.print(re.toString());
         out.flush();
         out.close();

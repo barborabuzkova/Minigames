@@ -1,5 +1,6 @@
 package com.example.minigames;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Game { //currently just a wrapper for Position
@@ -26,16 +27,14 @@ public class Game { //currently just a wrapper for Position
      *
      * @param collected JavaSet of cards that are a potential set
      */
-    public boolean setCollected (Set<Card> collected) {
+    public ArrayList<Card> setCollected (Set<Card> collected) {
         return position.setCollected(collected);
     }
 
     /**
      * Calls Position to add cards if there isn't a set
      */
-    public void addCardsNoSetFound () {
-        position.addCardsNoSetFound();
-    }
+    public ArrayList<Card> addCardsNoSetFound () {return position.addCardsNoSetFound();}
 
     /**
      * Calls Position to add cards if the board isn't full

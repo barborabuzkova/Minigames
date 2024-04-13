@@ -1,7 +1,8 @@
-var SET_SIZE; //int
-var NUMBER_OF_CHARACTERISTICS; //int
-var boardSize; //int
+var SET_SIZE; // int
+var NUMBER_OF_CHARACTERISTICS; // int
+var boardSize; // int
 var cardsClickedSoFar = [];
+var cardsClickedIDs = [];
 window.onload = function() {
     console.log("hello_world");
     $.post("hello-servlet",
@@ -9,21 +10,27 @@ window.onload = function() {
             loadPage:true
         }).done(function (data, status) {
             createBoard(data);
-            //parseRequest(data);
-            for (let i = 0; i < boardSize; i++) {
-                console.log("hello")
-                document.getElementById(i.toString()).addEventListener("click", cardClicked(i.toString()));
-            }
     });
-    console.log("hi")
-
-    console.log("hihihi")
 }
 
 function parseRequest(data) {
-    window._data = data;
-    //console.log("Got some data " + window._data)
-    //console.log(window._data.card1)
+    if (data.collectedSet) {
+        for (let i = 0; i < SET_SIZE; i++) { // remove current cards
+            document.getElementById(cardsClickedIDs[i]).remove();
+        }
+        for (let i = 0; i < SET_SIZE; i++) { // add new cards
+            const newDiv = document.createElement("div");
+            newDiv.setAttribute("id", cardsClickedIDs[i])
+            newDiv.setAttribute("class", "box")
+            newDiv.append(data.cards[i])
+            // newDiv.style.color = 'red';
+            newDiv.addEventListener("click", cardClicked(newDiv.id.toString()))
+            // console.log(i.toString())
+            document.getElementById("board").appendChild(newDiv);
+        }
+    } else {
+        console.log("not a set")
+    }
 }
 
 //creates board and initializes global variables
@@ -34,20 +41,37 @@ function createBoard(data) {
     boardSize = data.boardSize;
 
     //create board
-    for (let i = 0; i < boardSize; i++) {
+    for (var i = 0; i < boardSize; i++) {
         const newDiv = document.createElement("div");
         newDiv.setAttribute("id", i)
         newDiv.setAttribute("class", "box")
         newDiv.append(data.cards[i])
-        // document.body.insertBefore(newDiv, document.getElementById("board"))
+        newDiv.addEventListener("click", cardClicked(newDiv.id.toString()))
+        // console.log(i.toString())
         document.getElementById("board").appendChild(newDiv);
     }
 }
 
 function cardClicked(i) {
     return function () {
-        console.log("cardClicked was called, i = " + i.innerText)
-        cardsClickedSoFar.push(document.getElementById(i));
-        console.log("hi " + cardsClickedSoFar)
+        console.log("cardClicked was called, i = " + i)
+        //TODO if not there already - if it is, it should give a message
+        cardsClickedSoFar.push(document.getElementById(i).innerText);
+        cardsClickedIDs.push(i);
+        if (cardsClickedSoFar.length == SET_SIZE) {
+            console.log(cardsClickedSoFar)
+            var myJson = JSON.stringify(cardsClickedSoFar)
+            $.post("hello-servlet", {
+                setFound:true,
+                cardsInSet:myJson
+            }).done(function (data, status) {
+                parseRequest(data)
+                for (let j = 0; j < SET_SIZE; j++) {
+                    cardsClickedSoFar.pop();
+                    cardsClickedIDs.pop();
+                }
+            })
+
+        }
     }
 }
