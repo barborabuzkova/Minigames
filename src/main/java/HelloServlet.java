@@ -61,6 +61,7 @@ public class HelloServlet extends HttpServlet {
             System.out.println(request.getParameter("cardsInSet")); // testing
             System.out.println("cards on board " + game.getPosition().getCurrentlyOnBoard());
             Set<Card> currentCards = new HashSet<>();
+            int numberOfCardsAdded = 0;
             for (String s: request.getParameter("cardsInSet").split("\",\"")) {
                 if (s.contains("[\"")) {
                     s = s.substring(2);
@@ -80,6 +81,7 @@ public class HelloServlet extends HttpServlet {
                 for (int i = 0; i < cardsToAdd.size(); i++) {
                     cards.put(i, cardsToAdd.get(i));
                 }
+                numberOfCardsAdded += Card.SET_SIZE;
             } else {
                 re.put("collectedSet", false);
             }
@@ -87,10 +89,13 @@ public class HelloServlet extends HttpServlet {
             while (Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).isEmpty()) {
                 System.out.println("adding cards, no set found");
                 cardsToAdd = game.addCardsNoSetFound();
+                numberOfCardsAdded += Card.SET_SIZE;
                 for (int i = 0; i < cardsToAdd.size(); i++) {
                     cards.put(i, cardsToAdd.get(i));
                 }
             }
+            re.put("numberOfCardsAdded", numberOfCardsAdded);
+
         }
 
         re.put("cards", cards);

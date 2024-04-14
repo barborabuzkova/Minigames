@@ -1,8 +1,8 @@
 var SET_SIZE; // int
 var NUMBER_OF_CHARACTERISTICS; // int
 var boardSize; // int
-var cardsClickedSoFar = [];
-var cardsClickedIDs = [];
+var cardsClickedSoFar = []; // string
+var cardsClickedIDs = []; // int
 window.onload = function() {
     console.log("hello_world");
     $.post("hello-servlet",
@@ -15,21 +15,42 @@ window.onload = function() {
 
 function parseRequest(data) {
     if (data.collectedSet) {
-        for (let i = 0; i < SET_SIZE; i++) { // remove current cards
-            document.getElementById(cardsClickedIDs[i]).remove();
-        }
-        for (let i = 0; i < SET_SIZE; i++) { // add new cards
-            const newDiv = document.createElement("div");
-            newDiv.setAttribute("id", cardsClickedIDs[i])
-            newDiv.setAttribute("class", "box")
-            newDiv.append(data.cards[i])
-            // newDiv.style.color = 'red';
-            newDiv.addEventListener("click", cardClicked(newDiv.id.toString()))
-            // console.log(i.toString())
-            document.getElementById("board").appendChild(newDiv);
+        if (data.numberOfCardsAdded > SET_SIZE) { //TODO this move to switch
+            for (let i = 0; i < SET_SIZE; i++) { // replace current cards
+                document.getElementById(cardsClickedIDs[i]).innerText = data.cards[i];
+            }
+            for (let i = SET_SIZE; i < data.numberOfCardsAdded; i++) {
+                for (var j = 0, row; row = document.getElementsByTagName("table").rows[j]; j++) {
+                    const cell = document.createElement("td");
+                    cell.setAttribute("id", j + boardSize)
+                    cell.setAttribute("class", "box")
+                    cell.append(data.cards[j + SET_SIZE])
+                    cell.addEventListener("click", cardClicked(cell.id.toString()))
+                    row.appendChild(cell)
+                }
+            }
+            boardSize += data.numberOfCardsAdded - SET_SIZE;
+        } else if (data.numberOfCardsAdded == SET_SIZE) {
+            for (let i = 0; i < SET_SIZE; i++) { // replace current cards
+                document.getElementById(cardsClickedIDs[i]).innerText = data.cards[i];
+            }
+        } else {
+            for (var i = 0, row; row = table.rows[i]; i++) {
+                if (!cardsClickedIDs.includes(row.cells[boardSize/SET_SIZE].id)) {
+                    let exitForLoop = false;
+                    for (let j = 0; j < cardsClickedIDs.length && !exitForLoop; j++) {
+                        if (document.getElementById(cardsClickedIDs[j]).innerText === cardsClickedSoFar[j]) { // if innerText hasn't changed aka the card still needs to be updated
+                            document.getElementById(cardsClickedIDs[j]).innerText = row.cells[boardSize/SET_SIZE].innerText;
+                            exitForLoop = true;
+                        }
+                    }
+                }
+                row.removeChild(row.cells[boardSize/SET_SIZE]);
+            }
         }
     } else {
         console.log("not a set")
+        alert("the cards you have selected are not a set")
     }
 }
 
@@ -40,18 +61,18 @@ function createBoard(data) {
     NUMBER_OF_CHARACTERISTICS = data.NUMBER_OF_CHARACTERISTICS;
     boardSize = data.boardSize;
 
+    // edited, originally copied from https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
     const tbl = document.createElement("table");
     const tblBody = document.createElement("tbody");
-    var counter = 0;
+    var counter = 0; // for the id
     // creating all cells
     for (let i = 0; i < SET_SIZE; i++) {
         // creates a table row
         const row = document.createElement("tr");
 
         for (let j = 0; j < boardSize/SET_SIZE; j++) {
-            // Create a <td> element and a text node, make the text
-            // node the contents of the <td>, and put the <td> at
-            // the end of the table row
+            // Create a <td> element and a text node, make the text node the contents of the <td>,
+            // and put the <td> at the end of the table row
             const cell = document.createElement("td");
             cell.setAttribute("id", counter)
             cell.setAttribute("class", "box")
@@ -71,36 +92,12 @@ function createBoard(data) {
     tbl.appendChild(tblBody);
     // appends <table> into <body>
     document.body.appendChild(tbl);
+    //TODO move this into css, increase size, have padding, center table, etc
     // sets the border attribute of tbl to '2'
     tbl.setAttribute("border", "2");
 
-    //TODO put creation of grid here instead of css based on setsize and numofchars
-
-    // var columns = new String();
-    // var rows = new String();
-    // for (let i = 0; i < boardSize / SET_SIZE; i++) {
-    //     columns = columns + " 140 px"
-    // }
-    // for (let i = 0; i < SET_SIZE; i++) {
-    //     rows = rows + " 120 px"
-    // }
-    // console.log("rows: " + rows + " columns: " + columns)
-    // document.getElementById("board").style.gridTemplateColumns = columns;
-    // document.getElementById("board").style.gridTemplateRows = rows;
-
 
     //TODO stop printing to console and put it into alerts, display some information
-
-    //create board
-    // for (var i = 0; i < boardSize; i++) {
-    //     const newDiv = document.createElement("div");
-    //     newDiv.setAttribute("id", i)
-    //     newDiv.setAttribute("class", "box")
-    //     newDiv.append(data.cards[i])
-    //     newDiv.addEventListener("click", cardClicked(newDiv.id.toString()))
-    //     // console.log(i.toString())
-    //     document.getElementById("board").appendChild(newDiv);
-    // }
 }
 
 function cardClicked(i) {
@@ -122,7 +119,6 @@ function cardClicked(i) {
                     cardsClickedIDs.pop();
                 }
             })
-
         }
     }
 }
