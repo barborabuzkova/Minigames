@@ -83,7 +83,7 @@ public class HelloServlet extends HttpServlet {
             } else {
                 re.put("collectedSet", false);
             }
-            System.out.println("added, number of sets is " + Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()));
+            System.out.println("added, number of sets is " + Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).size());
             while (Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).isEmpty()) {
                 System.out.println("adding cards, no set found");
                 cardsToAdd = game.addCardsNoSetFound();

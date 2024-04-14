@@ -1,12 +1,11 @@
 #board {
     display: grid;
     margin: 10px;
-    grid-template-columns: 140px 140px 140px 140px;
-    grid-template-rows: 120px 120px 120px;
     grid-row-gap: 5px;
     grid-column-gap: 5px;
     justify-content: center;
     background-color: aliceblue;
+    /* grid-template-columns: 140px 140px 140px 140px; grid-template-rows: 120px 120px 120px; */
 }
 
 .box {
