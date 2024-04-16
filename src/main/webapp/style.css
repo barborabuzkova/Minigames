@@ -1,16 +1,16 @@
 table {
     margin-right: auto;
     margin-left: auto;
-    padding: 20px;
+    padding: 25px;
     background-color: floralwhite;
-    border: 3px solid black;
+    border: 5px solid black;
+    border-spacing: 10px;
 }
 
 td {
-    padding: 40px;
+    padding: 35px;
     align-items: center;
-    background-color: bisque;
-    border: 2px solid black;
+    border: 5px solid black;
 }
 
 h1 {
@@ -19,4 +19,44 @@ h1 {
 
 p {
     text-align: center;
+}
+
+.card0w0 {
+    background-color: cornflowerblue;
+}
+.card0w1 {
+    background-color: lightcoral;
+}
+.card0w2 {
+    background-color: mediumseagreen;
+}
+
+.card1w0 {
+    border-color: navy;
+}
+.card1w1 {
+    border-color: maroon;
+}
+.card1w2 {
+    border-color: darkgreen;
+}
+
+.card2w0 {
+    color: cyan;
+}
+.card2w1 {
+    color: crimson;
+}
+.card2w2 {
+    color: lawngreen;
+}
+
+.card3w0 {
+    text-decoration: underline;
+}
+.card3w1 {
+    font-weight: bold;
+}
+.card3w2 {
+    font-style: italic;
 }

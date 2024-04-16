@@ -4,7 +4,7 @@ var boardSize; // int
 var cardsClickedSoFar = []; // string
 var cardsClickedIDs = []; // int
 window.onload = function() {
-    console.log("hello_world");
+    // console.log("hello_world");
     $.post("hello-servlet",
         {
             loadPage:true
@@ -51,11 +51,10 @@ function createBoard(data) { // edited, originally copied from https://developer
                 // and put the <td> at the end of the table row
                 const cell = document.createElement("td");
                 cell.setAttribute("id", counter)
-                cell.setAttribute("class", "box")
                 cell.append(data.cards[counter])
+                addStyle(cell)
+                // console.log("I called addStyle")
                 cell.addEventListener("click", cardClicked(cell.id.toString()))
-                //const cellText = document.createTextNode(`cell in row ${i}, column ${j}`);
-                //cell.appendChild(cellText);
                 row.appendChild(cell);
                 counter ++;
             }
@@ -70,14 +69,24 @@ function createBoard(data) { // edited, originally copied from https://developer
         document.body.appendChild(tbl);
 }
 
+function addStyle(cell) {
+    let str = "";
+    let index = 1;
+    for (let i = 0; i < NUMBER_OF_CHARACTERISTICS; i++) {
+        str = str +  ` card` + i + `w` + cell.innerText[index]
+        index += 3;
+    }
+    cell.setAttribute("class", str)
+}
+
 function cardClicked(i) {
     return function () {
         if (!cardsClickedIDs.includes(i)) {
-            console.log("cardClicked was called, i = " + i)
+            // console.log("cardClicked was called, i = " + i)
             cardsClickedSoFar.push(document.getElementById(i).innerText);
             cardsClickedIDs.push(i);
             if (cardsClickedSoFar.length == SET_SIZE) {
-                console.log(cardsClickedSoFar)
+                // console.log(cardsClickedSoFar)
                 var myJson = JSON.stringify(cardsClickedSoFar)
                 $.post("hello-servlet", {
                     setFound:true,
@@ -110,7 +119,7 @@ function processSetCollected(data) {
             case 0: // cardsAdded equals SET_SIZE
                 replaceCards(data);
                 alert(`Set successfully collected! The cards have been replaced. There ` +
-                    (data.numberOfSets == 1 ? 'is' : 'are') + `now ${data.numberOfSets} ` +
+                    (data.numberOfSets == 1 ? 'is' : 'are') + ` now ${data.numberOfSets} ` +
                     (data.numberOfSets == 1 ? 'set' : 'sets') + ` on the board.`)
                 break;
             default: // cardsAdded greater than SET_SIZE
@@ -121,7 +130,7 @@ function processSetCollected(data) {
         }
 
     } else {
-        //console.log("not a set")
+        // console.log("not a set")
         alert("The cards you have selected are not a set, please refer to the rules and try again.")
     }
 }
@@ -144,22 +153,26 @@ function removeCards(data) {
 function replaceCards(data) {
         for (let i = 0; i < SET_SIZE; i++) { // replace current cards
             document.getElementById(cardsClickedIDs[i]).innerText = data.cards[i];
+            addStyle(document.getElementById(cardsClickedIDs[i]))
         }
 }
 
 function replaceAndAddCards(data) {
         for (let i = 0; i < SET_SIZE; i++) { // replace current cards
             document.getElementById(cardsClickedIDs[i]).innerText = data.cards[i];
+            addStyle(document.getElementById(cardsClickedIDs[i]))
+
         }
         for (let i = SET_SIZE; i < data.numberOfCardsAdded; i++) {
             for (var j = 0, row; row = document.getElementsByTagName("table").rows[j]; j++) {
                 const cell = document.createElement("td");
                 cell.setAttribute("id", j + boardSize)
-                cell.setAttribute("class", "box")
                 cell.append(data.cards[j + SET_SIZE])
+                addStyle(cell)
                 cell.addEventListener("click", cardClicked(cell.id.toString()))
                 row.appendChild(cell)
             }
         }
         boardSize += data.numberOfCardsAdded - SET_SIZE;
 }
+

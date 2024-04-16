@@ -58,8 +58,8 @@ public class HelloServlet extends HttpServlet {
             }
             // re.put("cards", cards);
         } else if (request.getParameter("setFound") != null && request.getParameter("setFound").equals("true")) {
-            System.out.println(request.getParameter("cardsInSet")); // testing
-            System.out.println("cards on board " + game.getPosition().getCurrentlyOnBoard());
+            // System.out.println("cardsInSet " + request.getParameter("cardsInSet")); // testing
+            // System.out.println("cards on board " + game.getPosition().getCurrentlyOnBoard());
             Set<Card> currentCards = new HashSet<>();
             int numberOfCardsAdded = 0;
             for (String s: request.getParameter("cardsInSet").split("\",\"")) {
@@ -74,7 +74,7 @@ public class HelloServlet extends HttpServlet {
                     }
                 }
             }
-            System.out.println(currentCards); // testing
+            // System.out.println(currentCards); // testing
             ArrayList<Card> cardsToAdd = game.getPosition().setCollected(currentCards);
             if (!cardsToAdd.isEmpty()) {
                 re.put("collectedSet", true);
