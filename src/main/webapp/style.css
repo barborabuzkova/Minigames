@@ -1,14 +1,22 @@
-#board {
-    display: grid;
-    margin: 10px;
-    grid-row-gap: 5px;
-    grid-column-gap: 5px;
-    justify-content: center;
-    background-color: aliceblue;
-    /* grid-template-columns: 140px 140px 140px 140px; grid-template-rows: 120px 120px 120px; */
+table {
+    margin-right: auto;
+    margin-left: auto;
+    padding: 20px;
+    background-color: floralwhite;
+    border: 3px solid black;
 }
 
-.box {
+td {
+    padding: 40px;
+    align-items: center;
     background-color: bisque;
     border: 2px solid black;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
 }

@@ -99,6 +99,7 @@ public class HelloServlet extends HttpServlet {
         }
 
         re.put("cards", cards);
+        re.put("numberOfSets", Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).size());
         System.out.println(re);
         out.print(re.toString());
         out.flush();

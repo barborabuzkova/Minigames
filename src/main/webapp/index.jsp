@@ -9,14 +9,6 @@
 </head>
 <body>
 <h1><%= "Welcome to Set!" %></h1>
-<br/>
-
-<div id="board"></div>
-<!--
-<br>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
--->
 </body>
 </html>
 
