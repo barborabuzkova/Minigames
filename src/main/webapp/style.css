@@ -1,16 +1,16 @@
 table {
     margin-right: auto;
     margin-left: auto;
-    padding: 25px;
+    padding: 15px;
     background-color: floralwhite;
     border: 5px solid black;
-    border-spacing: 10px;
+    border-spacing: 20px;
 }
 
 td {
     padding: 35px;
     align-items: center;
-    border: 5px solid black;
+    border: 7px solid black;
 }
 
 h1 {
@@ -19,7 +19,18 @@ h1 {
 
 p {
     text-align: center;
+    font-size: large;
 }
+
+button {
+    padding: 10px;
+    background-color: beige;
+    font-size: 18px;
+    border-radius: 10px;
+    margin: 20px;
+    border: 3px solid darkkhaki;
+}
+
 
 .card0w0 {
     background-color: cornflowerblue;
@@ -52,11 +63,13 @@ p {
 }
 
 .card3w0 {
-    text-decoration: underline;
+    text-decoration: mediumblue underline 5px;
 }
 .card3w1 {
-    font-weight: bold;
+    text-decoration: darkmagenta underline 5px;
+    /*font-weight: bold;*/
 }
 .card3w2 {
-    font-style: italic;
+    text-decoration: palegreen underline 5px;
+    /*font-style: italic;*/
 }

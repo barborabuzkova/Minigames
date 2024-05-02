@@ -22,23 +22,87 @@ function doInitialization(data) {
 
     printRuleParagraph();
 
-    createBoard(data);
+    createStartButton(data)
 
-    alert(`Welcome to the start of Set! Please refer to the rules written on the page. There `
-        + `${data.numberOfSets == 1 ? 'is' : 'are'}` +
-        ` currently ${data.numberOfSets} ${data.numberOfSets == 1 ? 'set' : 'sets'} on the board.`)
+
 }
 
 function printRuleParagraph() {
         const rules = document.createElement("p");
-        rules.append(`Set is a pattern-recognition matching game. A standard set is made up of ${SET_SIZE} cards.` +
+        rules.append(`Set is a pattern-recognition matching game. A set is made up of ${SET_SIZE} cards.` +
             ` Each card has ${NUMBER_OF_CHARACTERISTICS} characteristics. In order for ${SET_SIZE} cards to be a` +
             ` set, each characteristic must be either all the same or all different.`)
+        rules.setAttribute("id", "rules")
         document.body.appendChild(rules);
+}
+
+function createStartButton(data) {
+    const button = document.createElement("button")
+    button.setAttribute("id", "startButton")
+    button.textContent = "Start Game"
+
+    button.addEventListener("click", function () {
+        alert(`Welcome to the start of Set! Please refer to the rules written on the page. There `
+            + `${data.numberOfSets == 1 ? 'is' : 'are'}` +
+            ` currently ${data.numberOfSets} ${data.numberOfSets == 1 ? 'set' : 'sets'} on the board.`)
+        document.getElementById("startButton").remove();
+        createRestartButton(data)
+        createBoard(data);
+    })
+    document.body.appendChild(button);
+}
+
+function createRestartButton(data) {
+    const button = document.createElement("button")
+    button.setAttribute("id", "restartButton")
+    button.textContent = "Restart Game"
+
+    button.addEventListener("click", function () {
+        destroy();
+        $.post("hello-servlet",
+            {
+                restart:true,
+                loadPage:true
+            }).done(function (data, status) {
+            doInitialization(data);
+        });
+    })
+    document.body.appendChild(button);
+}
+
+function destroy() {
+    document.getElementById("rules").remove();
+    document.getElementById("board").remove();
+    document.getElementById("restartButton").remove();
+    // document.getElementById("hintButton").remove();
+    // document.getElementById("giveUpButton").remove();
+}
+
+function createHintButton(data) {
+    const button = document.createElement("button")
+    button.setAttribute("id", "hintButton")
+    button.textContent = "Hint"
+
+    button.addEventListener("click", function () {
+
+    })
+    document.body.appendChild(button);
+}
+
+function createGiveUpButton(data) {
+    const button = document.createElement("button")
+    button.setAttribute("id", "giveUpButton")
+    button.textContent = "Give Up"
+
+    button.addEventListener("click", function () {
+
+    })
+    document.body.appendChild(button);
 }
 
 function createBoard(data) { // edited, originally copied from https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
         const tbl = document.createElement("table");
+        tbl.setAttribute("id", "board")
         const tblBody = document.createElement("tbody");
         var counter = 0; // for the id
         // creating all cells
