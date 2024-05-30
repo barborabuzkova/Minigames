@@ -23,8 +23,6 @@ function doInitialization(data) {
     printRuleParagraph();
 
     createStartButton(data)
-
-
 }
 
 function printRuleParagraph() {
@@ -47,6 +45,8 @@ function createStartButton(data) {
             ` currently ${data.numberOfSets} ${data.numberOfSets == 1 ? 'set' : 'sets'} on the board.`)
         document.getElementById("startButton").remove();
         createRestartButton(data)
+        createHintButton(data)
+        createGiveUpButton(data)
         createBoard(data);
     })
     document.body.appendChild(button);
@@ -74,8 +74,8 @@ function destroy() {
     document.getElementById("rules").remove();
     document.getElementById("board").remove();
     document.getElementById("restartButton").remove();
-    // document.getElementById("hintButton").remove();
-    // document.getElementById("giveUpButton").remove();
+    document.getElementById("hintButton").remove();
+    document.getElementById("giveUpButton").remove();
 }
 
 function createHintButton(data) {
@@ -84,7 +84,11 @@ function createHintButton(data) {
     button.textContent = "Hint"
 
     button.addEventListener("click", function () {
-
+        $.post("hello-servlet", {
+            giveHint: true
+        }).done(function (data, status) {
+            alert("One card that is included in one of the sets is " + data.hint)
+        })
     })
     document.body.appendChild(button);
 }
@@ -95,7 +99,11 @@ function createGiveUpButton(data) {
     button.textContent = "Give Up"
 
     button.addEventListener("click", function () {
-
+        $.post("hello-servlet", {
+            giveUp: true
+        }).done(function (data, status) {
+            alert("The cards in one of the sets are " + data.answer)
+        })
     })
     document.body.appendChild(button);
 }
@@ -149,7 +157,7 @@ function cardClicked(i) {
             // console.log("cardClicked was called, i = " + i)
             cardsClickedSoFar.push(document.getElementById(i).innerText);
             cardsClickedIDs.push(i);
-            if (cardsClickedSoFar.length == SET_SIZE) {
+            if (cardsClickedSoFar.length >= SET_SIZE) {
                 // console.log(cardsClickedSoFar)
                 var myJson = JSON.stringify(cardsClickedSoFar)
                 $.post("hello-servlet", {
@@ -157,7 +165,7 @@ function cardClicked(i) {
                     cardsInSet:myJson
                 }).done(function (data, status) {
                     processSetCollected(data)
-                    for (let j = 0; j < SET_SIZE; j++) {
+                    while (cardsClickedSoFar.length != 0) {
                         cardsClickedSoFar.pop();
                         cardsClickedIDs.pop();
                     }
@@ -225,18 +233,34 @@ function replaceAndAddCards(data) {
         for (let i = 0; i < SET_SIZE; i++) { // replace current cards
             document.getElementById(cardsClickedIDs[i]).innerText = data.cards[i];
             addStyle(document.getElementById(cardsClickedIDs[i]))
-
         }
-        for (let i = SET_SIZE; i < data.numberOfCardsAdded; i++) {
-            for (var j = 0, row; row = document.getElementsByTagName("table").rows[j]; j++) {
+
+        let counterForIDS = 0;
+        for (let currRow = 0; currRow < SET_SIZE; currRow ++) {
+            for (let cardInRow = 0; cardInRow < ((data.numberOfCardsAdded - SET_SIZE) / SET_SIZE); cardInRow ++) {
+                row = document.getElementsByTagName("tr")[currRow];
                 const cell = document.createElement("td");
-                cell.setAttribute("id", j + boardSize)
-                cell.append(data.cards[j + SET_SIZE])
+                cell.setAttribute("id", boardSize + counterForIDS)
+                cell.append(data.cards[SET_SIZE + counterForIDS])
                 addStyle(cell)
                 cell.addEventListener("click", cardClicked(cell.id.toString()))
                 row.appendChild(cell)
+                counterForIDS ++;
             }
         }
+
+
+        // for (let i = SET_SIZE; i < data.numberOfCardsAdded; i++) {
+        //     for (var j = 0; ; j++) { //TODO issue
+        //         row = document.getElementsByTagName("table").rows[j];
+        //         const cell = document.createElement("td");
+        //         cell.setAttribute("id", j + boardSize)
+        //         cell.append(data.cards[j + SET_SIZE])
+        //         addStyle(cell)
+        //         cell.addEventListener("click", cardClicked(cell.id.toString()))
+        //         row.appendChild(cell)
+        //     }
+        // }
         boardSize += data.numberOfCardsAdded - SET_SIZE;
 }
 

@@ -67,6 +67,8 @@ public class Position {
         return collectedSets;
     }
 
+    public ArrayList<Card> getCurrentDeck() { return currentDeck; }
+
     /**
      * After calling Algorithm.checkIfSet, removes collected cards from board and puts the set into
      * the collectedSets, if room on board, adds new cards
