@@ -79,7 +79,7 @@ public class Position {
         if (Algorithm.checkIfSet(collected)) {
             collectedSets.add(new ASet(collected));
             currentlyOnBoard.removeAll(collected);
-            if (currentlyOnBoard.size() < Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS) {
+            if (!currentDeck.isEmpty() && currentlyOnBoard.size() < Card.SET_SIZE * Card.NUMBER_OF_CHARACTERISTICS) {
                 for (int i = 0; i < Card.SET_SIZE; i++) {
                     toBeAdded.add(currentDeck.remove(0));
                     currentlyOnBoard.add(toBeAdded.get(i));

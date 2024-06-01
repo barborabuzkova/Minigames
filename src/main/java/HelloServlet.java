@@ -56,41 +56,8 @@ public class HelloServlet extends HttpServlet {
 
         } else if (request.getParameter("setFound") != null && request.getParameter("setFound").equals("true")) {
             System.out.println("Possible set found, cardsInSet " + request.getParameter("cardsInSet")); // testing
-
             Set<Card> currentCards = processCardsInRequest(request);
-            //TODO handle end case - if currentDeck is empty, just remove the cards if they're right
-            int numberOfCardsAdded = 0;
-            ArrayList<Card> cardsToAdd = game.getPosition().setCollected(currentCards); // checks if set, if so, adds cards
-
-            if (!cardsToAdd.isEmpty()) {
-                re.put("collectedSet", true);
-                for (int i = 0; i < cardsToAdd.size(); i++) {
-                    cards.put(i, cardsToAdd.get(i));
-                }
-                numberOfCardsAdded += Card.SET_SIZE;
-
-                System.out.println("Is a set, cards added, number of sets is " + Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).size() +
-                        "; Cards on board is " + game.getPosition().getCurrentlyOnBoard().size() +
-                        "; Cards left in deck is " + game.getPosition().getCurrentDeck().size());
-
-                while (Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).isEmpty()) {
-                    System.out.println("adding cards, no set found");
-                    cardsToAdd = game.addCardsNoSetFound();
-                    numberOfCardsAdded += Card.SET_SIZE;
-                    System.out.println("checkpoint 1");
-                    for (int i = 0; i < Card.SET_SIZE; i++) {
-                        System.out.println("hello " + i);
-                        cards.put(i + Card.SET_SIZE, cardsToAdd.get(i));
-                        System.out.println("hi " + i);
-                    }
-                    System.out.println("checkpoint 2");
-                }
-                System.out.println("checkpoint 3");
-                re.put("numberOfCardsAdded", numberOfCardsAdded);
-            } else {
-                re.put("collectedSet", false);
-                System.out.println("Not a set, no change made.");
-            }
+            setFound(re, currentCards, cards);
 
         } else if (request.getParameter("giveHint") != null && request.getParameter("giveHint").equals("true")) {
             System.out.println("Hint requested.");
@@ -99,7 +66,6 @@ public class HelloServlet extends HttpServlet {
         } else if (request.getParameter("giveUp") != null && request.getParameter("giveUp").equals("true")) {
             System.out.println("Give up, answer requested.");
             giveUp(re);
-
         }
 
         re.put("cards", cards);
@@ -120,6 +86,69 @@ public class HelloServlet extends HttpServlet {
         }
     }
 
+    private void setFound(JSONObject re, Set<Card> currentCards, JSONArray cards) {
+        if (!Algorithm.checkIfSet(currentCards)) { //not a set
+            re.put("collectedSet", false);
+            System.out.println("Not a set, no change made.");
+
+        } else { //it is a set, decide if adding cards
+            re.put("collectedSet", true);
+
+            if (game.getPosition().getCurrentDeck().isEmpty()) { //deck empty
+                ArrayList<Card> cardsToAdd = game.getPosition().setCollected(currentCards); // backend collect sets
+                System.out.println("Is a set, collected, number of sets is " + Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).size() +
+                        "; Cards on board is " + game.getPosition().getCurrentlyOnBoard().size() +
+                        "; Cards left in deck is " + game.getPosition().getCurrentDeck().size());
+                re.put("numberOfCardsAdded", 0);
+                if (Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).isEmpty()) {
+                    re.put("gameover", "true");
+                }
+
+            } else { //deck not empty, add cards
+                ArrayList<Card> cardsToAdd = game.getPosition().setCollected(currentCards); // backend collect sets
+                int numberOfCardsAdded = 0;
+
+                for (int i = 0; i < cardsToAdd.size(); i++) { //adds cards to JSONArray
+                    cards.put(i, cardsToAdd.get(i));
+                }
+
+                numberOfCardsAdded += Card.SET_SIZE;
+
+                //adds additional cards if necessary
+                while (Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).isEmpty()) {
+                    System.out.println("adding cards, no set found");
+                    cardsToAdd = game.addCardsNoSetFound();
+                    for (int i = 0; i < Card.SET_SIZE; i++) {
+                        cards.put(numberOfCardsAdded, cardsToAdd.get(i));
+                        numberOfCardsAdded ++;
+                    }
+                }
+                System.out.println("Is a set, cards added, number of sets is " + Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).size() +
+                        "; Cards on board is " + game.getPosition().getCurrentlyOnBoard().size() +
+                        "; Cards left in deck is " + game.getPosition().getCurrentDeck().size());
+                re.put("numberOfCardsAdded", numberOfCardsAdded);
+            }
+        }
+    }
+
+    private void giveHint(JSONObject re) {
+        ArrayList<ASet> currentSets = new ArrayList<ASet>(Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()));
+        System.out.println("hint: " + currentSets.get(0).getCards().toArray()[0]);
+        re.put("hint", currentSets.get(0).getCards().toArray()[0]);
+    }
+
+    private void giveUp(JSONObject re) {
+        ArrayList<ASet> currentSets = new ArrayList<ASet>(Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()));
+        System.out.print("answer: ");
+        JSONArray answer = new JSONArray();
+        for (int i = 0; i < Card.SET_SIZE; i++) {
+            System.out.print(currentSets.get(0).getCards().toArray()[i]);
+            answer.put(i, currentSets.get(0).getCards().toArray()[i]);
+        }
+        System.out.println();
+        re.put("answer", answer);
+    }
+
     private Set<Card> processCardsInRequest(HttpServletRequest request) {
         Set<Card> currentCards = new HashSet<>();
         for (String s: request.getParameter("cardsInSet").split("\",\"")) {
@@ -136,22 +165,5 @@ public class HelloServlet extends HttpServlet {
         }
         //System.out.println(currentCards);
         return currentCards;
-    }
-
-    private void giveHint(JSONObject re) {
-        ArrayList<ASet> currentSets = new ArrayList<ASet>(Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()));
-        System.out.println("hint: " + currentSets.get(0).getCards().toArray()[0]);
-        re.put("hint", currentSets.get(0).getCards().toArray()[0]);
-    }
-    private void giveUp(JSONObject re) {
-        ArrayList<ASet> currentSets = new ArrayList<ASet>(Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()));
-        System.out.print("answer: ");
-        JSONArray answer = new JSONArray();
-        for (int i = 0; i < Card.SET_SIZE; i++) {
-            System.out.print(currentSets.get(0).getCards().toArray()[i]);
-            answer.put(i, currentSets.get(0).getCards().toArray()[i]);
-        }
-        System.out.println();
-        re.put("answer", answer);
     }
 }

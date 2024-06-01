@@ -164,10 +164,15 @@ function cardClicked(i) {
                     setFound:true,
                     cardsInSet:myJson
                 }).done(function (data, status) {
-                    processSetCollected(data)
-                    while (cardsClickedSoFar.length != 0) {
-                        cardsClickedSoFar.pop();
-                        cardsClickedIDs.pop();
+                    if (data.gameover == "true") {
+                        alert(`Congratulations! You have finished the game, there are no more sets. Click 'OK' to play again!`)
+                        document.getElementById('reset-button').click();
+                    } else {
+                        processSetCollected(data)
+                        while (cardsClickedSoFar.length != 0) {
+                            cardsClickedSoFar.pop();
+                            cardsClickedIDs.pop();
+                        }
                     }
                 })
             }
@@ -182,11 +187,9 @@ function processSetCollected(data) {
         switch (data.numberOfCardsAdded - SET_SIZE) {
             case -SET_SIZE: //cardsAdded equals zero
                 removeCards(data);
-
                 alert(`Set successfully collected! No new cards have been added because ` +
                     (data.numberOfSets + data.numberOfSets == 1 ? 'set is' : 'sets are') +
                     ` still on the board.`)
-                
                 break;
             case 0: // cardsAdded equals SET_SIZE
                 replaceCards(data);
@@ -208,18 +211,23 @@ function processSetCollected(data) {
 }
 
 function removeCards(data) {
-        for (var i = 0, row; row = table.rows[i]; i++) {
-            if (!cardsClickedIDs.includes(row.cells[boardSize/SET_SIZE].id)) {
-                let exitForLoop = false;
-                for (let j = 0; j < cardsClickedIDs.length && !exitForLoop; j++) {
-                    if (document.getElementById(cardsClickedIDs[j]).innerText === cardsClickedSoFar[j]) { // if innerText hasn't changed aka the card still needs to be updated
-                        document.getElementById(cardsClickedIDs[j]).innerText = row.cells[boardSize/SET_SIZE].innerText;
-                        exitForLoop = true;
-                    }
-                }
-            }
-            row.removeChild(row.cells[boardSize/SET_SIZE]);
-        }
+    for (let i = 0; i < SET_SIZE; i++) {
+        document.getElementById(cardsClickedIDs[i]).remove();
+        boardSize --;
+    }
+
+    //TODO make this work, should fix offset
+    // for (let currRow = 0; currRow < SET_SIZE; currRow++) {
+    //     if (document.getElementsByTagName("tr")[currRow].cells.length > boardSize / SET_SIZE) {
+    //         for (let rowExploring = 0; rowExploring < SET_SIZE; currRow) {
+    //             if (document.getElementsByTagName("tr")[currRow].cells.length < boardSize / SET_SIZE) {
+    //                 document.getElementsByTagName("tr")[rowExploring].append(document.getElementsByTagName("tr")[currRow]);
+    //                 document.getElementsByTagName("tr")[currRow].remove();
+    //                 rowExploring = SET_SIZE;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 function replaceCards(data) {
@@ -248,19 +256,6 @@ function replaceAndAddCards(data) {
                 counterForIDS ++;
             }
         }
-
-
-        // for (let i = SET_SIZE; i < data.numberOfCardsAdded; i++) {
-        //     for (var j = 0; ; j++) { //TODO issue
-        //         row = document.getElementsByTagName("table").rows[j];
-        //         const cell = document.createElement("td");
-        //         cell.setAttribute("id", j + boardSize)
-        //         cell.append(data.cards[j + SET_SIZE])
-        //         addStyle(cell)
-        //         cell.addEventListener("click", cardClicked(cell.id.toString()))
-        //         row.appendChild(cell)
-        //     }
-        // }
         boardSize += data.numberOfCardsAdded - SET_SIZE;
 }
 
