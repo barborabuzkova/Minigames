@@ -58,18 +58,26 @@ function createRestartButton(data) {
     button.textContent = "Restart Game"
 
     button.addEventListener("click", function () {
-        destroy();
-        $.post("hello-servlet",
-            {
-                restart:true,
-                loadPage:true
-            }).done(function (data, status) {
-            doInitialization(data);
-        });
+        restartGame();
     })
     document.body.appendChild(button);
 }
 
+function restartGame() {
+    destroy();
+    while (cardsClickedSoFar.length != 0) {
+        cardsClickedSoFar.pop();
+        cardsClickedIDs.pop();
+    }
+
+    $.post("hello-servlet",
+        {
+            restart:true,
+            loadPage:true
+        }).done(function (data, status) {
+        doInitialization(data);
+    });
+}
 function destroy() {
     document.getElementById("rules").remove();
     document.getElementById("board").remove();
@@ -166,7 +174,7 @@ function cardClicked(i) {
                 }).done(function (data, status) {
                     if (data.gameover == "true") {
                         alert(`Congratulations! You have finished the game, there are no more sets. Click 'OK' to play again!`)
-                        document.getElementById('reset-button').click();
+                        restartGame();
                     } else {
                         processSetCollected(data)
                         while (cardsClickedSoFar.length != 0) {
@@ -216,18 +224,17 @@ function removeCards(data) {
         boardSize --;
     }
 
-    //TODO make this work, should fix offset
-    // for (let currRow = 0; currRow < SET_SIZE; currRow++) {
-    //     if (document.getElementsByTagName("tr")[currRow].cells.length > boardSize / SET_SIZE) {
-    //         for (let rowExploring = 0; rowExploring < SET_SIZE; currRow) {
-    //             if (document.getElementsByTagName("tr")[currRow].cells.length < boardSize / SET_SIZE) {
-    //                 document.getElementsByTagName("tr")[rowExploring].append(document.getElementsByTagName("tr")[currRow]);
-    //                 document.getElementsByTagName("tr")[currRow].remove();
-    //                 rowExploring = SET_SIZE;
-    //             }
-    //         }
-    //     }
-    // }
+    for (let currRow = 0; currRow < SET_SIZE; currRow++) {
+        if (document.getElementsByTagName("tr")[currRow].cells.length > boardSize / SET_SIZE) {
+            for (let rowExploring = 0; rowExploring < SET_SIZE; rowExploring++) {
+                if (document.getElementsByTagName("tr")[currRow].cells.length < boardSize / SET_SIZE) {
+                    document.getElementsByTagName("tr")[rowExploring].append(document.getElementsByTagName("tr")[currRow]);
+                    document.getElementsByTagName("tr")[currRow].remove();
+                    break;
+                }
+            }
+        }
+    }
 }
 
 function replaceCards(data) {

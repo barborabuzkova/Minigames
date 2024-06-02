@@ -110,9 +110,8 @@ public class HelloServlet extends HttpServlet {
 
                 for (int i = 0; i < cardsToAdd.size(); i++) { //adds cards to JSONArray
                     cards.put(i, cardsToAdd.get(i));
+                    numberOfCardsAdded ++;
                 }
-
-                numberOfCardsAdded += Card.SET_SIZE;
 
                 //adds additional cards if necessary
                 while (Algorithm.findAllSets(game.getPosition().getCurrentlyOnBoard()).isEmpty()) {
