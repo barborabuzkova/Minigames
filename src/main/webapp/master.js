@@ -67,7 +67,7 @@ function restartGame() {
     destroy();
     while (cardsClickedSoFar.length != 0) {
         cardsClickedSoFar.pop();
-        cardsClickedIDs.pop();
+        document.getElementById(cardsClickedIDs.pop()).style.outline = "none"
     }
 
     $.post("hello-servlet",
@@ -165,6 +165,7 @@ function cardClicked(i) {
             // console.log("cardClicked was called, i = " + i)
             cardsClickedSoFar.push(document.getElementById(i).innerText);
             cardsClickedIDs.push(i);
+            document.getElementById(i).style.outline = "8px solid lightGray"
             if (cardsClickedSoFar.length >= SET_SIZE) {
                 // console.log(cardsClickedSoFar)
                 var myJson = JSON.stringify(cardsClickedSoFar)
@@ -178,8 +179,8 @@ function cardClicked(i) {
                     } else {
                         processSetCollected(data)
                         while (cardsClickedSoFar.length != 0) {
+                            document.getElementById(cardsClickedIDs.pop()).style.outline = "none"
                             cardsClickedSoFar.pop();
-                            cardsClickedIDs.pop();
                         }
                     }
                 })
